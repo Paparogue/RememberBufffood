@@ -14,6 +14,7 @@ using Dalamud.Game.Addon.Lifecycle;
 using Dalamud.Game.Addon.Lifecycle.AddonArgTypes;
 using Dalamud.Game.Text.SeStringHandling;
 using System.Text.RegularExpressions;
+using Lumina.Excel.GeneratedSheets;
 
 namespace RememberBufffood
 {
@@ -77,7 +78,7 @@ namespace RememberBufffood
         {
             string messageText = message.TextValue;
             string pattern = @"Battle commencing in (\d+) seconds!";
-
+            PluginLog.Warning("TerritoryType: " + _cs.TerritoryType);
             Match match = Regex.Match(messageText, pattern);
             if (match.Success)
             {
@@ -103,15 +104,15 @@ namespace RememberBufffood
         }
 
         private DateTime lastExecutionTime = DateTime.MinValue;
-        private const int IntervalSeconds = 120;
+        private const int IntervalSeconds = 180;
 
         private void OnUpdate()
         {
             if (_cs.LocalPlayer is null || !_cs.IsLoggedIn || !PluginConfig.Enable ||
                 (_cs.TerritoryType != 1047 && // The Unending Coil of Bahamut (Ultimate)
                  _cs.TerritoryType != 1048 && // The Weapon's Refrain (Ultimate)
-                 _cs.TerritoryType != 1049 && // The Epic of Alexander (Ultimate)
-                 _cs.TerritoryType != 1050 && // Dragonsong's Reprise (Ultimate)
+                 _cs.TerritoryType != 887 && // The Epic of Alexander (Ultimate) true
+                 _cs.TerritoryType != 968 && // Dragonsong's Reprise (Ultimate) true
                  _cs.TerritoryType != 1051))  // The Omega Protocol (Ultimate)
             {
                 return;
@@ -129,7 +130,7 @@ namespace RememberBufffood
                     if (player == null) continue;
 
                     var buff = player.Statuses.FirstOrDefault(s => s.StatusId == 48);
-                    if (buff == null || buff.RemainingTime < 900) // 15 minutes
+                    if (buff == null || buff.RemainingTime < 300) // 15 minutes
                     {
                         playersWithoutBuff.Add(player.Name.TextValue.ToString());
                     }
@@ -137,8 +138,8 @@ namespace RememberBufffood
 
                 if (playersWithoutBuff.Count > 0)
                 {
-                    string message = "Bufffood is missing or less than 15 minutes for: " + string.Join(", ", playersWithoutBuff);
-                    chatties.SendMessage("/p " + message + " <se.1>");
+                    string message = "Bufffood is missing or less than 5 minutes for: " + string.Join(", ", playersWithoutBuff);
+                    chatties.SendMessage("/p " + message);
                 }
                 lastExecutionTime = DateTime.Now;
             }

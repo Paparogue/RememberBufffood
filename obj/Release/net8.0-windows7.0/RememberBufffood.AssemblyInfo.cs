@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RememberBufffood")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+94e681e6cdf76508aeaf228b52da331f0dc0bf72")]
 [assembly: System.Reflection.AssemblyProductAttribute("RememberBufffood")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RememberBufffood")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
